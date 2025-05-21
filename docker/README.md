@@ -28,16 +28,16 @@ Create the `.env` file and adjust the values to match your setup:
 # Please replace the placeholder values with your actual configuration.
 
 ## Commit Chain Contracts and Privacy Ledger Contracts
-NODE_CC_CHAIN_ID=999990001
-RPC_URL_NODE_CC=http://example-rpc-url
-WS_URL_NODE_CC=ws://example-ws-url
+NODE_CC_CHAIN_ID=1911
+RPC_URL_NODE_CC=https://commitchain.parfin.io
+WS_URL_NODE_CC=ws://commitchain.parfin.io
 
 ## Deploy Privacy Ledger Contracts
-COMMITCHAIN_CCDEPLOYMENTPROXYREGISTRY=0x3A3675E13F1b6D4183528974cc431d8123669e64
+COMMITCHAIN_CCDEPLOYMENTPROXYREGISTRY=0xB42058A1cD0593352d53EA54c24545F2a0bD4131
 # Use the command `make create-private-key` to generate the private key
 PRIVATE_KEY_SYSTEM=0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
 RPC_URL_NODE_PL=http://privacy-ledger:8545
-NODE_PL_CHAIN_ID=example_chain_id
+NODE_PL_CHAIN_ID=191100
 
 # Database variables
 MONGODB_CONNECTION_STRING="mongodb://mongodb:27017/admin?directConnection=true&replicaSet=rs0"
@@ -103,6 +103,12 @@ make create-relayer-secrets
 ```
 
 These secrets are automatically saved and injected into the relayer container through environment variables.
+
+Now deploy the relayer components:
+
+```bash
+make relayer
+```
 
 ## Step 6: Verify Services
 

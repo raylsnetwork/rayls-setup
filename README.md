@@ -11,7 +11,7 @@ You can choose between two setup options:
 Best suited for local development and quick testing without the need for a Kubernetes cluster.
 
 👉 Full setup guide here:  
-[docker/README.md](docs/docker/README.md)
+[docker/README.md](docker/README.md)
 
 ---
 
@@ -20,5 +20,4 @@ Best suited for local development and quick testing without the need for a Kuber
 Recommended for staging or production-like environments, such as Drex testing.
 
 👉 Full setup guide here:  
-[helm/README.md](docs/kubernetes/README.md)
-
+[helm/README.md](kubernetes/README.md)
