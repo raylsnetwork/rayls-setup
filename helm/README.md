@@ -19,6 +19,13 @@ If you don't have a MongoDB installation with Replica Set, and cannot install on
 This image is available at:
 `public.ecr.aws/rayls/rayls-mongors`
 
+### 1.1. Clone the Repository
+
+```bash
+git clone git@github.com:raylsnetwork/rayls-setup.git
+cd rayls-setup/helm
+```
+
 Here is the translated version of your warning and installation instructions:
 
 ---
@@ -42,14 +49,7 @@ helm install mongodb charts/mongodb -n rayls
 
 The Privacy Ledger is a required component and must be deployed before deploying smart contracts or the relayer.
 
-### 2.1. Clone the Repository
-
-```bash
-git clone <public-repo>
-cd privacy-ledger
-```
-
-### 2.2. Configure MongoDB Connection
+### 2.1. Configure MongoDB Connection
 Simply provide a valid connection string in the MONGODB_CONN environment variable inside charts/privacy-ledger/values.yaml:
 
 ```yaml
@@ -57,11 +57,10 @@ env:
   MONGODB_CONN: "mongodb://<user>:<password>@<host>:<port>/<db>?authSource=admin"
 ```
 
-### 2.3. Deploy Privacy Ledger
+### 2.2. Deploy Privacy Ledger
 
 ⚠️ Important: The volume used by Privacy Ledger is configured with the HostPath plugin for testing purposes.
 If the host is destroyed, all data will be lost.
-
 
 ```bash
 helm upgrade --install -n rayls privacy-ledger charts/privacy-ledger

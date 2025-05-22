@@ -17,8 +17,8 @@ Ensure you have the following installed:
 ## Step 1: Clone and Configure the Repository
 
 ```bash
-git clone <your-repo-url>
-cd <repo-folder>
+git clone git@github.com:raylsnetwork/rayls-setup.git
+cd rayls-setup/docker
 ```
 
 Create the `.env` file and adjust the values to match your setup:
