@@ -85,7 +85,7 @@ NODE_PL_CHAIN_ID=191100
 Now, deploy the contracts to the privacy-ledger:
 ```
 docker pull public.ecr.aws/rayls/rayls-contracts-privacy-ledger:v2.3.1
-docker run public.ecr.aws/rayls/rayls-contracts-privacy-ledger:v2.3.1 --network shared_cc
+docker run public.ecr.aws/rayls/rayls-contracts-privacy-ledger:v2.3.1 npx hardhat deploy:privacy-ledger --private-ledger <pl network endpoint> --network shared
 ```
 
 ```sh
@@ -140,6 +140,12 @@ env:
   COMMITCHAIN_CCDEPLOYMENTPROXYREGISTRY: "0x9bfe7a23fC8882D7A692d959C89c0c2A7266bfED"
   COMMITCHAIN_CCENDPOINTMAXBATCHMESSAGES: "500"
   COMMITCHAIN_EXPIRATIONREVERTTIMEINMINUTES: "30"
+  COMMITCHAIN_ZKDVPMERKLETREEDEPTH: "8"
+  COMMITCHAIN_BLOCKTIME_INSECONDS: "5"
+  OTEL_SDK_DISABLED: "true"
+  OTEL_SERVICE_NAME: "relayer-A"
+  OTEL_EXPORTER_OTLP_ENDPOINT: "http://rayls-dev-otel-collector.api.blockchain-dev.parfin.aws"
+  OTEL_EXPORTER_OTLP_PROTOCOL: "http/protobuf"
   LOG_LEVEL: "Info"
   LOG_HANDLER: "Text"
   KMS_CORSDOMAIN: "*"
