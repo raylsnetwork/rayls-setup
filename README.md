@@ -20,4 +20,4 @@ Best suited for local development and quick testing without the need for a Kuber
 Recommended for staging or production-like environments, such as Drex testing.
 
 👉 Full setup guide here:  
-[helm/README.md](kubernetes/README.md)
+[helm/README.md](helm/README.md)
