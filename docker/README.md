@@ -24,20 +24,18 @@ cd rayls-setup/docker
 Create the `.env` file and adjust the values to match your setup:
 
 ```bash
-# The following environment variables are used to configure the Rayls application.
-# Please replace the placeholder values with your actual configuration.
-
-## Commit Chain Contracts and Privacy Ledger Contracts
+PRIVATE_KEY_SYSTEM=0x3f8e605eea31dfbe118a34391876caf619702f6b4f39dd7665db4ca7609322cb
 NODE_CC_CHAIN_ID=1911
-RPC_URL_NODE_CC=https://commitchain.parfin.io
-WS_URL_NODE_CC=ws://commitchain.parfin.io
+COMMITCHAIN_CCDEPLOYMENTPROXYREGISTRY=0xc2BaA3D18EE3B9A2425Bd5a8018e3F2f1171cDd2
 
-## Deploy Privacy Ledger Contracts
-COMMITCHAIN_CCDEPLOYMENTPROXYREGISTRY=0xB42058A1cD0593352d53EA54c24545F2a0bD4131
-# Use the command `make create-private-key` to generate the private key
-PRIVATE_KEY_SYSTEM=0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-RPC_URL_NODE_PL=http://privacy-ledger:8545
-NODE_PL_CHAIN_ID=191100
+RPC_URL_NODE_CC=https://commitchain.parfin.io
+
+## Add Participant
+PARTICIPANT_CHAIN_ID=000000 # Change this to your NetworkID
+PARTICIPANT_NAME=PL_NAME
+# 0: Participant, 1: Issuer, 2: Auditor
+PARTICIPANT_ROLE=1
+PARTICIPANT_OWNER_ADDRESS=0x0000000000000000000000000000000000000000
 
 # Database variables
 MONGODB_CONNECTION_STRING="mongodb://mongodb:27017/admin?directConnection=true&replicaSet=rs0"
