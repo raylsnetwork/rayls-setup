@@ -33,7 +33,7 @@ privacy-ledger:
 	@if [ "$(filter up down,$(word 2,$(MAKECMDGOALS)))" ]; then \
 		action=$(word 2,$(MAKECMDGOALS)); \
 		if [ "$$action" = "up" ]; then \
-			chmod +x ./scripts/init-privacy-ledger.sh && ./scripts/init-privacy-ledger.sh; \
+			chmod +x ./scripts/init-privacy-ledger.sh && sh ./scripts/init-privacy-ledger.sh; \
 			docker compose up -d privacy-ledger && sleep 10; \
 			docker compose up deploy-privacy-ledger; \
 		elif [ "$$action" = "down" ]; then \

@@ -20,74 +20,17 @@ Ensure you have the following installed:
 git clone git@github.com:raylsnetwork/rayls-setup.git
 cd rayls-setup/docker
 ```
+We are providing here a `.env` file that includes the required environment variables. Please change the value of your changeID and Identification Name.
 
-Create the `.env` file and adjust the values to match your setup:
+You can generate private keys and relayer secrets using the provided `make` commands.
 
-```bash
-PRIVATE_KEY_SYSTEM=0x3f8e605eea31dfbe118a34391876caf619702f6b4f39dd7665db4ca7609322cb
-NODE_CC_CHAIN_ID=1911
-COMMITCHAIN_CCDEPLOYMENTPROXYREGISTRY=0xc2BaA3D18EE3B9A2425Bd5a8018e3F2f1171cDd2
-
-RPC_URL_NODE_CC=https://commitchain.parfin.io
-
-## Add Participant
-PARTICIPANT_CHAIN_ID=000000 # Change this to your NetworkID
-PARTICIPANT_NAME=PL_NAME
-# 0: Participant, 1: Issuer, 2: Auditor
-PARTICIPANT_ROLE=1
-PARTICIPANT_OWNER_ADDRESS=0x0000000000000000000000000000000000000000
-
-# Database variables
-MONGODB_CONNECTION_STRING="mongodb://mongodb:27017/admin?directConnection=true&replicaSet=rs0"
-
-# Relayer variables
-BLOCKCHAIN_DATABASE_TYPE="mongodb"
-BLOCKCHAIN_KMS_OPERATION_SERVICE_ROOT_URL="http://kmm:8080"
-BLOCKCHAIN_CHAINID=600123
-BLOCKCHAIN_CHAINURL="http://privacy-ledger:8545"
-BLOCKCHAIN_PLSTARTINGBLOCK="0"
-BLOCKCHAIN_EXECUTOR_BATCH_MESSAGES="500"
-BLOCKCHAIN_PLENDPOINTADDRESS="0x0000000000000000000000000000000000000000"
-BLOCKCHAIN_LISTENER_BATCH_BLOCKS="50"
-BLOCKCHAIN_STORAGE_PROOF_BATCH_MESSAGES="200"
-BLOCKCHAIN_ENYGMA_PROOF_API_ADDRESS="http://circomapi:3000"
-BLOCKCHAIN_ENYGMA_PL_EVENTS="0x0000000000000000000000000000000000000000"
-BLOCKCHAIN_DATABASE_CONNECTIONSTRING="mongodb://mongodb:27017/admin?directConnection=true&replicaSet=rs0"
-COMMITCHAIN_CHAINURL="https://commitchain.parfin.io"
-COMMITCHAIN_VERSION="2.0"
-COMMITCHAIN_CHAINID="999990001"
-COMMITCHAIN_CCSTARTINGBLOCK="1990335"
-COMMITCHAIN_ATOMICREVERTSTARTINGBLOCK="1990335"
-COMMITCHAIN_OPERATORCHAINID="999"
-COMMITCHAIN_CCDEPLOYMENTPROXYREGISTRY="0x9bfe7a23fC8882D7A692d959C89c0c2A7266bfED"
-COMMITCHAIN_CCENDPOINTMAXBATCHMESSAGES="500"
-COMMITCHAIN_EXPIRATIONREVERTTIMEINMINUTES="30"
-COMMITCHAIN_ZKDVPMERKLETREEDEPTH="8"
-COMMITCHAIN_BLOCKTIME_INSECONDS="5"
-LOG_LEVEL="Info"
-LOG_HANDLER="Text"
-KMS_CORSDOMAIN="*"
-KMS_AWSPROFILE="xxx"
-KMS_AWSALIAS="xxx"
-KMS_GCPPROJECT="xxx"
-KMS_GCPLOCATION="xxx"
-KMS_GCPKEYRING="xxx"
-KMS_GCPCRYPTOKEY="xxx"
-KMS_ENCRYPTORSERVICE="plaintext"
-KMS_DATABASE_CONNECTIONSTRING="mongodb://mongodb:27017/admin?directConnection=true&replicaSet=rs0"
-BLOCKCHAIN_KMS_API_KEY="bc02718914e14e20f58f1a7fb8e042f8"
-BLOCKCHAIN_KMS_SECRET="a0b25b23605d2f8ca7cb418838a1cddf40c9626682b4b19df3ed245681cc6a5a"
-KMS_API_KEY="bc02718914e14e20f58f1a7fb8e042f8"
-KMS_SECRET="a0b25b23605d2f8ca7cb418838a1cddf40c9626682b4b19df3ed245681cc6a5a"
-```
-
-Make sure the `.env` file includes the required environment variables. You can generate private keys and relayer secrets using the provided `make` commands.
-
-The KMS env values, are only to be used if the KMM module for KMS is enabled.
+The KMS env values, are only to be used if the KMM module for KMS is enabled. If you are not encrypting the keys that are stored in the database, you do not need to change the `xxx` values.
 
 ## Step 2: Initialize MongoDB Replica Set
 
-After MongoDB is up, initialize the replica set:
+For test purposes, we are provinding a containers that initializes a MongoDB cluster with a Replica Set, which is required for the application.
+
+To initialize the MongoDB with the replica set, just run:
 
 ```bash
 make mongodb up
