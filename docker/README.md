@@ -83,7 +83,7 @@ KMS_SECRET="a0b25b23605d2f8ca7cb418838a1cddf40c9626682b4b19df3ed245681cc6a5a"
 
 Make sure the `.env` file includes the required environment variables. You can generate private keys and relayer secrets using the provided `make` commands.
 
-This command wraps `docker compose up -d --build` and will initialize all containers.
+The KMS env values, are only to be used if the KMM module for KMS is enabled.
 
 ## Step 2: Initialize MongoDB Replica Set
 
