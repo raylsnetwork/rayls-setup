@@ -20,7 +20,7 @@ Ensure you have the following installed:
 git clone git@github.com:raylsnetwork/rayls-setup.git
 cd rayls-setup/docker
 ```
-We are providing here a `.env` file that includes the required environment variables. Please change the value of your changeID and Identification Name.
+We are providing here a `.env` file that includes the required environment variables. Please change the value where have a comment `# Change this`
 
 You can generate private keys and relayer secrets using the provided `make` commands.
 

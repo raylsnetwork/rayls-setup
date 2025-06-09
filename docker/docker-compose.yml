@@ -19,6 +19,8 @@ services:
             - 8660:8660
     deploy-privacy-ledger:
         image: public.ecr.aws/rayls/rayls-contracts:v2.4.0
+        entrypoint: ["/bin/sh"]
+        command: ["-c", "npx hardhat deploy:privacy-ledger --private-ledger CUSTOM --network custom_pl"]
         env_file:
           - .env
         volumes:
