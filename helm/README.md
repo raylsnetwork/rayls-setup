@@ -57,6 +57,8 @@ env:
   MONGODB_CONN: "mongodb://<user>:<password>@<host>:<port>/<db>?authSource=admin"
 ```
 
+Also, change the `NETWORKID` variable in the values file to match your ChainID.
+
 ### 2.2. Deploy Privacy Ledger
 
 ⚠️ Important: The volume used by Privacy Ledger is configured with the HostPath plugin for testing purposes.
