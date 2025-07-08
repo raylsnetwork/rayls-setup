@@ -101,9 +101,9 @@ After MongoDB is up, initialize the replica set:
 make privacy-ledger up
 ```
 
-## Step 4: Deploy Privacy Ledger Contracts
+## Step 4(Optional): Deploy Privacy Ledger Contracts
 
-Before continuing, ensure the Privacy Ledger service is healthy. Then run:
+If you want to deploy contracts separately, ensure the Privacy Ledger service is healthy. Then run:
 
 ```bash
 make deploy-privacy-ledger
@@ -158,3 +158,12 @@ See `.env` file for a full list of configuration options. Key variables include:
 * `MONGODB_CONNECTION_STRING`: MongoDB replica set connection string.
 * `BLOCKCHAIN_KMS_SECRET`, `KMS_SECRET`: Secrets used for signing and encryption.
 * `BLOCKCHAIN_PLSTARTINGBLOCK`, `COMMITCHAIN_CCSTARTINGBLOCK`: Initial block numbers for indexers.
+
+## Backup keys
+
+```bash
+docker exec -it docker-mongodb-1 bash
+mongosh
+use rayls-relayer
+db.secrets.find()
+```
