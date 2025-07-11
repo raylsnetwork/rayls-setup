@@ -80,47 +80,53 @@ This is the identification name of the particpant in the subnet. Must be filled 
 
 The KMS env values, are only to be used if the KMM module for KMS is enabled. If you are not encrypting the keys that are stored in the database, you do not need to change the `xxx` values.
 
-## Step 2: Initialize MongoDB Replica Set
+## Step 2: Initialize the MongoDB Replica Set
 
-As described in the begin of this documentation, we are provinding a container image that initializes a MongoDB cluster with a Replica Set, which is required for the application.
+As mentioned at the beginning of this documentation, we provide a container image that initializes a MongoDB instance with a **Replica Set**, which is required by the application.
 
-To initialize the MongoDB with the replica set, just run:
+To start MongoDB with the replica set, simply run:
 
 ```bash
 make mongodb up
 ```
 
-After you run this, many logs will be outputed in the screen. Wait until appear **REPLICASET ONLINE**. It indicates that the mongodb was started and the replicaset initialized. After this you can stop the output just typing Control+C.
+After running this command, you'll see several log messages on the screen.
+Wait until you see the message: REPLICASET ONLINE — this indicates that MongoDB has started and the replica set has been successfully initialized.
 
-If you want to see the logs of the mongodb again, just enter **docker compose logs mongodb**
+Once it's up, you can stop the log output by pressing Control + C.
 
-## Step 3: Initialize Privacy Ledger
+To view the MongoDB logs again at any time, run: `docker compose logs mongodb`
 
-After MongoDB is up, initialize the Privacy Ledger:
+## Step 3: Initialize the Privacy Ledger
+
+After MongoDB is up and the replica set is online, initialize the Privacy Ledger by running:
 
 ```bash
 make privacy-ledger up
 ```
 
-This command automatically initializes the Privacy Ledger and deploy the required contracts.
+This command will automatically start the Privacy Ledger service and deploy the required smart contracts.
 
-> ⚠️ **Note the contract addresses output.**
-> These values must be added at the same field in the `.env` file.
+> [!WARNING]
+> **Note the contract addresses output.**.
+> These values must be copied and added to the corresponding fields in the `.env` file.
 
-## Step 4: Deploy Relayer
+## Step 4: Deploy the Relayer and other components
 
-Run the following command to generate KMS and relayer secrets:
+Run the following command to generate the secrets for the KMS and the Relayer:
 
 ```bash
 make create-relayer-secrets
 ```
 
-These secrets are automatically saved and injected into the relayer container through environment variables.
+These secrets are automatically saved and injected into the Relayer container as environment variables.
 
-> [!INFO]
-> If you receive any permission error, check if the `scripts/generate_keys.sh` is configured to be executable. If not, do this running `chmod +x scripts/generate_keys.sh`
+> [!TIP]
+> If you encounter a permission error, check whether the scripts/generate_keys.sh file is executable.
+> If not, you can make it executable by running:
+> `chmod +x scripts/generate_keys.sh`
 
-Now deploy the relayer components:
+Now deploy the Relayer and its related components:
 
 ```bash
 make relayer
