@@ -71,6 +71,10 @@ This value must be filled at:
 * Line 9: NODE_PL_CHAIN_ID
 * Line 18: PARTICIPANT_CHAIN_ID
 
+> [!NOTE]
+> If you plan to start the Relayer and connect to a subnet, make sure to **share the chain ID** with the Subnet Operator **beforehand**.  
+> The Relayer service, that will be configured in the step 4, will return errors until the Privacy Ledger’s `CHAIN_ID` is authorized to participate in the subnet.
+
 ### KMS values
 
 The KMS env values, are only to be used if the KMM module for KMS is enabled. If you are not encrypting the keys that are stored in the database, you do not need to change the `xxx` values.
