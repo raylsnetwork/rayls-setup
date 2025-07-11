@@ -35,12 +35,12 @@ services:
         restart: on-failure
     kmm:
         image: public.ecr.aws/rayls/rayls-kmm:v2.4.0
-        entrypoint: [ "/app/raylz-kos", "run", "--env", "/app/var/.env", "--port", "8083" ]
+        entrypoint: [ "/app/raylz-kos", "run", "--env", "/app/var/.env", "--port", "8080" ]
         volumes:
             - ./rayls/relayer/var/.env:/app/var/.env:ro
         restart: on-failure
         ports:
-            - 8083:8083
+            - 8080:8080
     atomic:
         image: public.ecr.aws/rayls/rayls-atomic-service:v2.4.0
         entrypoint: [ "/app/raylz-atomic", "run", "--env", "/app/var/.env" ]
