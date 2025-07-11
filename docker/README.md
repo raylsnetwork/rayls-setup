@@ -49,7 +49,7 @@ cd rayls-setup/docker
 A sample `.env` file is provided in this folder with all the required environment variables.  
 Please update the values marked with the comment ```# Change this```.
 
-> [!TIP]
+> [!NOTE]
 > This sample `.env` file includes contract information for our **shared Commit Chain**. In this setup, **Parfin** is acting as the **Subnet Operator**, and you are configuring a **Privacy Node Operator** that participates in Parfin's subnet.  
 > If you intend to connect to a different subnet, please contact the respective **Subnet Operator** to obtain the appropriate values for the remaining `.env` fields.
 
@@ -104,12 +104,20 @@ After MongoDB is up and the replica set is online, initialize the Privacy Ledger
 ```bash
 make privacy-ledger up
 ```
-
 This command will automatically start the Privacy Ledger service and deploy the required smart contracts.
 
 > [!WARNING]
 > **Note the contract addresses output.**.
 > These values must be copied and added to the corresponding fields in the `.env` file.
+
+> [!CAUTION]
+> When the Privacy Ledger starts, it creates the MongoDB database and local data files.  
+> If you need to change configuration values — such as the `CHAIN_ID` — you may need to stop MongoDB using:
+> ```bash
+> make mongodb down
+> ```  
+> Then, manually delete the data directories of both **Privacy Ledger** and **MongoDB** to avoid conflicts when restarting the services.
+
 
 ## Step 4: Deploy the Relayer and other components
 
