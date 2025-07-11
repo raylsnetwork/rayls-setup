@@ -59,7 +59,7 @@ Below is an explanation of the key variables to be changed:
 
 Here we need to fill with a Private Key that will deploy the required contracts in the Privacy Ledger. If you do not have the Private Key, we are providing the command ```make create-private-key``` to generate a new one.
 
-This field is in the Line 9.
+This field is in the Line 8.
 
 ### Privacy Ledger Chain ID
 
@@ -68,13 +68,8 @@ This is the chain ID of the Privacy Ledger, if any value if configured it will s
 Each participant of the subnet must have a different chainID.
 
 This value must be filled at:
-* Line 10: NODE_PL_CHAIN_ID
-* Line 13: PARTICIPANT_CHAIN_ID
-* Line 24: PARTICIPANT_CHAIN_ID
-
-### Participant Name
-
-This is the identification name of the particpant in the subnet. Must be filled at line 14 PARTICIPANT_NAME
+* Line 9: NODE_PL_CHAIN_ID
+* Line 18: PARTICIPANT_CHAIN_ID
 
 ### KMS values
 
