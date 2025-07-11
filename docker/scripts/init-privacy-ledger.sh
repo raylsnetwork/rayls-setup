@@ -61,7 +61,7 @@ if [ ! -d "/app/data/privacy-ledger" ]; then
   echo "> Calling init"
   geth init \
   --db.engine.host "${MONGODB_CONNECTION_STRING}" \
-  --db.engine.name="\${MONGODB_DATABASE}" \
+  --db.engine.name="privacy-ledger" \
   --db.engine mongodb \
   --datadir "/app/data/privacy-ledger" \
   --state.scheme=hash \
@@ -82,7 +82,7 @@ trap _term SIGTERM
 
 geth \
 --db.engine.host "${MONGODB_CONNECTION_STRING}" \
---db.engine.name="\${MONGODB_DATABASE}" \
+--db.engine.name="privacy-ledger" \
 --db.engine mongodb \
 --cache 4096 \
 --http \
@@ -99,7 +99,7 @@ geth \
 --ws.api eth,net,web3 \
 --ws.origins '*' \
 --datadir "/app/data/privacy-ledger" \
---networkid "${NODE_PL_CHAIN_ID}" \
+--networkid ${NODE_PL_CHAIN_ID} \
 --mine \
 --miner.etherbase="0x48074600e79d46a19d4f0f6869b4396eD244685F" \
 --miner.gaslimit="45000000" \

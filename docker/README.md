@@ -1,135 +1,141 @@
-Here’s a new README for your **Docker Compose-based Rayls stack**, inspired by the original Helm/K8s deployment doc but adapted to your `.env` and `Makefile`. You can copy this into a `README.md` file:
+Here are the instructions to install the required Rayls components for a **Rayls Privacy Node Operator**.
+
+> **Note:** This guide does **not** cover the setup of components for a **Subnet Operator**, which includes the **Governance APIs and Services**, as well as the **Subnet Hub**, typically a **Hyperledger Besu** node.
+
+For more information, please visit: [https://docs.rayls.com](https://docs.rayls.com)
 
 ---
 
 # Rayls Docker Compose Deployment
 
-This repository provides a Docker Compose setup for deploying Rayls components locally for development and testing purposes. It includes services such as MongoDB, Privacy Ledger, Relayer, KMM, and Circom API.
+This repository provides a Docker Compose setup for deploying Rayls components locally for development and testing purposes. It includes services such as **MongoDB**, **Privacy Ledger**, **Relayer**, **KMM**, and **Circom API**.
+
+> [!WARNING]
+> The MongoDB provided in this repository and referenced in this documentation is intended solely for **proof-of-concept** and **testing** purposes within the Rayls platform.  
+> **Do not use this setup for production environments or in other projects.**
 
 ## Prerequisites
 
-Ensure you have the following installed:
+Before proceeding, ensure you're using a **Linux-based operating system** with an **amd64** processor architecture.
 
-* [Docker](https://www.docker.com/)
-* [Docker Compose](https://docs.docker.com/compose/)
-* [make](https://www.gnu.org/software/make/)
+Additionally, make sure the following components are installed:
 
-## Step 1: Clone and Configure the Repository
+- **[Docker](https://www.docker.com/)** (version **28.1** or higher) and **[Docker Compose](https://docs.docker.com/compose/)** (version **2.33.1** or higher)  
+Older versions have not been validated for this setup.
+
+To verify your Docker installation, run:
+```bash
+docker --version
+docker compose version
+```
+✅ Note: Use docker compose (with a space) instead of docker-compose, which is deprecated in newer versions.
+
+- **make** (version 4.3 or higher)
+
+To verify make is installed:
+```bash
+make --version
+```
+
+## Step 1: Clone the Repository and configure
+
+First, clone this repository and navigate to the appropriate directory to run make commands and adjust the environment variables in the .env file:
 
 ```bash
-git clone git@github.com:raylsnetwork/rayls-setup.git
+git clone https://github.com/raylsnetwork/rayls-setup.git
 cd rayls-setup/docker
 ```
 
-Create the `.env` file and adjust the values to match your setup:
+A sample `.env` file is provided in this folder with all the required environment variables.  
+Please update the values marked with the comment ```# Change this```.
 
-```bash
-PRIVATE_KEY_SYSTEM=0x3f8e605eea31dfbe118a34391876caf619702f6b4f39dd7665db4ca7609322cb
-NODE_CC_CHAIN_ID=1911
-COMMITCHAIN_CCDEPLOYMENTPROXYREGISTRY=0xc2BaA3D18EE3B9A2425Bd5a8018e3F2f1171cDd2
+> [!NOTE]
+> This sample `.env` file includes contract information for our **shared Commit Chain**. In this setup, **Parfin** is acting as the **Subnet Operator**, and you are configuring a **Privacy Node Operator** that participates in Parfin's subnet.  
+> If you intend to connect to a different subnet, please contact the respective **Subnet Operator** to obtain the appropriate values for the remaining `.env` fields.
 
-RPC_URL_NODE_CC=https://commitchain.parfin.io
+Below is an explanation of the key variables to be changed:
 
-## Add Participant
-PARTICIPANT_CHAIN_ID=000000 # Change this to your NetworkID
-PARTICIPANT_NAME=PL_NAME
-# 0: Participant, 1: Issuer, 2: Auditor
-PARTICIPANT_ROLE=1
-PARTICIPANT_OWNER_ADDRESS=0x0000000000000000000000000000000000000000
+### PRIVATE_KEY_SYSTEM
 
-# Database variables
-MONGODB_CONNECTION_STRING="mongodb://mongodb:27017/admin?directConnection=true&replicaSet=rs0"
+Here we need to fill with a Private Key that will deploy the required contracts in the Privacy Ledger. If you do not have the Private Key, we are providing the command ```make create-private-key``` to generate a new one.
 
-# Relayer variables
-BLOCKCHAIN_DATABASE_TYPE="mongodb"
-BLOCKCHAIN_KMS_OPERATION_SERVICE_ROOT_URL="http://kmm:8080"
-BLOCKCHAIN_CHAINID=600123
-BLOCKCHAIN_CHAINURL="http://privacy-ledger:8545"
-BLOCKCHAIN_PLSTARTINGBLOCK="0"
-BLOCKCHAIN_EXECUTOR_BATCH_MESSAGES="500"
-BLOCKCHAIN_PLENDPOINTADDRESS="0x0000000000000000000000000000000000000000"
-BLOCKCHAIN_LISTENER_BATCH_BLOCKS="50"
-BLOCKCHAIN_STORAGE_PROOF_BATCH_MESSAGES="200"
-BLOCKCHAIN_ENYGMA_PROOF_API_ADDRESS="http://circomapi:3000"
-BLOCKCHAIN_ENYGMA_PL_EVENTS="0x0000000000000000000000000000000000000000"
-BLOCKCHAIN_DATABASE_CONNECTIONSTRING="mongodb://mongodb:27017/admin?directConnection=true&replicaSet=rs0"
-COMMITCHAIN_CHAINURL="https://commitchain.parfin.io"
-COMMITCHAIN_VERSION="2.0"
-COMMITCHAIN_CHAINID="999990001"
-COMMITCHAIN_CCSTARTINGBLOCK="1990335"
-COMMITCHAIN_ATOMICREVERTSTARTINGBLOCK="1990335"
-COMMITCHAIN_OPERATORCHAINID="999"
-COMMITCHAIN_CCDEPLOYMENTPROXYREGISTRY="0x9bfe7a23fC8882D7A692d959C89c0c2A7266bfED"
-COMMITCHAIN_CCENDPOINTMAXBATCHMESSAGES="500"
-COMMITCHAIN_EXPIRATIONREVERTTIMEINMINUTES="30"
-COMMITCHAIN_ZKDVPMERKLETREEDEPTH="8"
-COMMITCHAIN_BLOCKTIME_INSECONDS="5"
-LOG_LEVEL="Info"
-LOG_HANDLER="Text"
-KMS_CORSDOMAIN="*"
-KMS_AWSPROFILE="xxx"
-KMS_AWSALIAS="xxx"
-KMS_GCPPROJECT="xxx"
-KMS_GCPLOCATION="xxx"
-KMS_GCPKEYRING="xxx"
-KMS_GCPCRYPTOKEY="xxx"
-KMS_ENCRYPTORSERVICE="plaintext"
-KMS_DATABASE_CONNECTIONSTRING="mongodb://mongodb:27017/admin?directConnection=true&replicaSet=rs0"
-BLOCKCHAIN_KMS_API_KEY="bc02718914e14e20f58f1a7fb8e042f8"
-BLOCKCHAIN_KMS_SECRET="a0b25b23605d2f8ca7cb418838a1cddf40c9626682b4b19df3ed245681cc6a5a"
-KMS_API_KEY="bc02718914e14e20f58f1a7fb8e042f8"
-KMS_SECRET="a0b25b23605d2f8ca7cb418838a1cddf40c9626682b4b19df3ed245681cc6a5a"
-```
+This field is in the Line 8.
 
-Make sure the `.env` file includes the required environment variables. You can generate private keys and relayer secrets using the provided `make` commands.
+### Privacy Ledger Chain ID
 
-The KMS env values, are only to be used if the KMM module for KMS is enabled.
+This is the chain ID of the Privacy Ledger, if any value if configured it will start with number 1, wich refers to the mainnet, that something that we do not want since its an error. We recommend to set a value with at least 4 digits.
 
-## Step 2: Initialize MongoDB Replica Set
+Each participant of the subnet must have a different chainID.
 
-After MongoDB is up, initialize the replica set:
+This value must be filled at:
+* Line 9: NODE_PL_CHAIN_ID
+* Line 18: PARTICIPANT_CHAIN_ID
+
+### KMS values
+
+The KMS env values, are only to be used if the KMM module for KMS is enabled. If you are not encrypting the keys that are stored in the database, you do not need to change the `xxx` values.
+
+## Step 2: Initialize the MongoDB Replica Set
+
+As mentioned at the beginning of this documentation, we provide a container image that initializes a MongoDB instance with a **Replica Set**, which is required by the application.
+
+To start MongoDB with the replica set, simply run:
 
 ```bash
 make mongodb up
 ```
 
-## Step 3: Initialize Privacy Ledger
+After running this command, you'll see several log messages on the screen.
+Wait until you see the message: REPLICASET ONLINE — this indicates that MongoDB has started and the replica set has been successfully initialized.
 
-After MongoDB is up, initialize the replica set:
+Once it's up, you can stop the log output by pressing Control + C.
+
+To view the MongoDB logs again at any time, run: `docker compose logs mongodb`
+
+## Step 3: Initialize the Privacy Ledger
+
+After MongoDB is up and the replica set is online, initialize the Privacy Ledger by running:
 
 ```bash
 make privacy-ledger up
 ```
+This command will automatically start the Privacy Ledger service and deploy the required smart contracts.
 
-## Step 4(Optional): Deploy Privacy Ledger Contracts
+> [!WARNING]
+> **Note the contract addresses output.**.
+> These values must be copied and added to the corresponding fields in the `.env` file.
 
-If you want to deploy contracts separately, ensure the Privacy Ledger service is healthy. Then run:
+> [!CAUTION]
+> When the Privacy Ledger starts, it creates the MongoDB database and local data files.  
+> If you need to change configuration values — such as the `CHAIN_ID` — you may need to stop MongoDB using:
+> ```bash
+> make mongodb down
+> ```  
+> Then, manually delete the data directories of both **Privacy Ledger** and **MongoDB** to avoid conflicts when restarting the services.
 
-```bash
-make deploy-privacy-ledger
-```
 
-This uses a containerized deployment script to deploy smart contracts on the Privacy Ledger node defined in `.env`.
+## Step 4: Deploy the Relayer and other components
 
-> ⚠️ **Save the contract addresses output.** These values must be added back to `.env`.
-
-## Step 5: Generate Relayer Secrets
-
-Run the following command to generate KMS and relayer secrets:
+Run the following command to generate the secrets for the KMS and the Relayer:
 
 ```bash
 make create-relayer-secrets
 ```
 
-These secrets are automatically saved and injected into the relayer container through environment variables.
+These secrets are automatically saved and injected into the Relayer container as environment variables.
 
-Now deploy the relayer components:
+> [!TIP]
+> If you encounter a permission error, check whether the scripts/generate_keys.sh file is executable.
+> If not, you can make it executable by running:
+> `chmod +x scripts/generate_keys.sh`
+
+Now deploy the Relayer and its related components:
 
 ```bash
 make relayer
 ```
 
-## Step 6: Verify Services
+## Step 5: Verify Services
 
 You can check logs using:
 
@@ -146,24 +152,6 @@ docker compose logs -f relayer
 To inspect containers:
 
 ```bash
-docker ps
+docker container ls
 docker exec -it <container_name> sh
-```
-
-## Environment Variables
-
-See `.env` file for a full list of configuration options. Key variables include:
-
-* `RPC_URL_NODE_PL`, `RPC_URL_NODE_CC`: URLs for PL and CC nodes.
-* `MONGODB_CONNECTION_STRING`: MongoDB replica set connection string.
-* `BLOCKCHAIN_KMS_SECRET`, `KMS_SECRET`: Secrets used for signing and encryption.
-* `BLOCKCHAIN_PLSTARTINGBLOCK`, `COMMITCHAIN_CCSTARTINGBLOCK`: Initial block numbers for indexers.
-
-## Backup keys
-
-```bash
-docker exec -it docker-mongodb-1 bash
-mongosh
-use rayls-relayer
-db.secrets.find()
 ```

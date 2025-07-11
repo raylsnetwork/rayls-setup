@@ -12,12 +12,3 @@ Best suited for local development and quick testing without the need for a Kuber
 
 👉 Full setup guide here:  
 [docker/README.md](docker/README.md)
-
----
-
-## ☸️ Helm Installation
-
-Recommended for staging or production-like environments, such as Drex testing.
-
-👉 Full setup guide here:  
-[helm/README.md](helm/README.md)
