@@ -10,11 +10,9 @@ For more information, please visit: [https://docs.rayls.com](https://docs.rayls.
 
 This repository provides a Docker Compose setup for deploying Rayls components locally for development and testing purposes. It includes services such as **MongoDB**, **Privacy Ledger**, **Relayer**, **KMM**, and **Circom API**.
 
-> ⚠️ **Warning**  
+> [!WARNING]
 > The MongoDB provided in this repository and referenced in this documentation is intended solely for **proof-of-concept** and **testing** purposes within the Rayls platform.  
 > **Do not use this setup for production environments or in other projects.**
-
----
 
 ## Prerequisites
 
